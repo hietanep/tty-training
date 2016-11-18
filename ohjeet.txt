@@ -1,0 +1,37 @@
+
+MongoDB käyntiin:
+=========================================================================
+docker run -d --name mongo -p 91:27017 -p 92:28017 mongo:3 mongod --rest
+
+
+Frontend
+=========================================================================
+-- luodaan image
+cd frontend
+docker build . --tag tty-frontend
+
+-- ajoon
+docker run -d --name frontend -p 8080:80 tty-frontend
+
+
+HAproxy
+=========================================================================
+-- luodaan image
+cd haproxy
+docker build . --tag tty-haproxy
+
+-- testataan syntaksi ( ei toiminut )
+docker run -it --rm --name haproxy-syntax-check haproxy:1.5 haproxy -c -f /usr/local/etc/haproxy/haproxy.cfg
+
+-- ajoon
+docker run -d --name haproxy -p 80:80 tty-haproxy
+
+
+Logstach
+=========================================================================
+-- luodaan image
+cd logstash
+docker build . --tag tty-logstash
+
+-- ajoon
+docker run -d --name logstash -p 2000:2000 tty-logstash
