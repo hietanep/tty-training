@@ -25,7 +25,7 @@ docker run -it --rm --name haproxy-syntax-check haproxy:1.5 haproxy -c -f /usr/l
 
 -- ajoon
 docker run -d --name haproxy -p 80:80 tty-haproxy
-
+docker run -d --name haproxy tty-haproxy
 
 Logstach
 =========================================================================
