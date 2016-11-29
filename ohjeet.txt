@@ -20,14 +20,10 @@ HAproxy
 cd haproxy
 docker build . --tag tty-haproxy
 
--- testataan syntaksi ( ei toiminut )
-docker run -it --rm --name haproxy-syntax-check haproxy:1.5 haproxy -c -f /usr/local/etc/haproxy/haproxy.cfg
-
 -- ajoon
 docker run -d --name haproxy -p 80:80 tty-haproxy
-docker run -d --name haproxy tty-haproxy
 
-Logstach
+Logstach 1
 =========================================================================
 -- luodaan image
 cd logstash
@@ -35,3 +31,21 @@ docker build . --tag tty-logstash
 
 -- ajoon
 docker run -d --name logstash -p 2000:2000 tty-logstash
+
+
+Logstach 2
+=========================================================================
+-- luodaan image
+cd logstash2
+docker build . --tag tty-logstash2
+
+-- ajoon
+docker run -d --name logstash -p 2002:2000 tty-logstash2
+
+
+rabbitMQ
+=========================================================================
+docker run -d --hostname my-rabbit --name rabbit  -p 8000:15672 -p 51:5671 -p 52:5672 rabbitmq:3
+docker run -d --hostname my-rabbit --name rabbit  -p 8000:15672 -p 51:5671 -p 52:5672 rabbitmq:3-management
+
+docker run -d --hostname my-rabbit --name rabbit  -p 8000:15672 -p 52:5672 rabbitmq:3-management
