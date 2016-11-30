@@ -23,29 +23,26 @@ docker build . --tag tty-haproxy
 -- ajoon
 docker run -d --name haproxy -p 80:80 tty-haproxy
 
-Logstach 1
+Logstach 1 - input http, output rabbitmq
 =========================================================================
 -- luodaan image
 cd logstash
 docker build . --tag tty-logstash
 
 -- ajoon
-docker run -d --name logstash -p 2000:2000 tty-logstash
+docker run -d --name logstash --link rabbit:rabbit -p 2000:2000 tty-logstash
 
 
-Logstach 2
+Logstach 2 - input rabbitmq, output mongo
 =========================================================================
 -- luodaan image
 cd logstash2
 docker build . --tag tty-logstash2
 
 -- ajoon
-docker run -d --name logstash -p 2002:2000 tty-logstash2
+docker run -d --name logstash2 --link rabbit:rabbit  -p 2002:2000 tty-logstash2
 
 
 rabbitMQ
 =========================================================================
-docker run -d --hostname my-rabbit --name rabbit  -p 8000:15672 -p 51:5671 -p 52:5672 rabbitmq:3
-docker run -d --hostname my-rabbit --name rabbit  -p 8000:15672 -p 51:5671 -p 52:5672 rabbitmq:3-management
-
-docker run -d --hostname my-rabbit --name rabbit  -p 8000:15672 -p 52:5672 rabbitmq:3-management
+docker run -d --hostname rabbit --name rabbit  -p 8000:15672 rabbitmq:3-management
